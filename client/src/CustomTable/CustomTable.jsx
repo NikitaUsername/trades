@@ -37,9 +37,7 @@ const CustomTable = ({ filters, columns, url, children }) => {
 
     if (!error && data)
         return (
-
             <div>
-                {children}
                 <Table
                     rowKey={'id'}
                     className={styles.table}

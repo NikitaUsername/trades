@@ -12,8 +12,7 @@ function App() {
         <Header />
         <Routes>
           <Route exact path="/trades" element={<Trades />} />
-          <Route path='/positions' element={<Positions />}>
-          </Route>
+          <Route path='/positions' element={<Positions />} />
         </Routes>
       </BrowserRouter>
     </div>

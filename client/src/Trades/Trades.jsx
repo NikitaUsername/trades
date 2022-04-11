@@ -1,26 +1,10 @@
-import React, { useState } from 'react';
-import DisplayContainer from '../CustomTable';
-import { Input, InputNumber } from 'antd';
-import styles from './Trades.module.css';
+import React from 'react';
+import CustomTable from '../CustomTable';
+import FiltersView from './FiltersView';
+import { withFilters } from '../hocs/withFilters';
 const url = '/trades';
 
-const Trades = () => {
-
-    const [filters, setFilters] = useState({
-        client: '',
-        instrument: '',
-        direction: '',
-        quantity: ''
-    });
-
-    const changeFilter = (type, value) => {
-        if (!value)
-            value = '';
-        setFilters(oldFilters => ({
-            ...oldFilters,
-            [type]: value.toString().toLowerCase()
-        }));
-    }
+const Trades = withFilters(({ changeFilter, filters }) => {
 
     const columns = [
         {
@@ -47,30 +31,10 @@ const Trades = () => {
 
     return (
         <div>
-
-            <DisplayContainer filters={filters} url={url} columns={columns} >
-                <div className={styles.filters} >
-                    <h2>Filters</h2>
-                    <div className={styles.filter}>
-                        <p className={styles.filterName}>Client</p>
-                        <Input onChange={(e) => changeFilter('client', e.target.value)} className={styles.filterInput} />
-                    </div>
-                    <div className={styles.filter}>
-                        <p className={styles.filterName}>Instrument</p>
-                        <Input onChange={(e) => changeFilter('instrument', e.target.value)} className={styles.filterInput} />
-                    </div>
-                    <div className={styles.filter}>
-                        <p className={styles.filterName}>Quantity</p>
-                        <InputNumber onChange={(e) => changeFilter('quantity', e)} className={styles.filterInput} />
-                    </div>
-                    <div className={styles.filter}>
-                        <p className={styles.filterName}>Direction</p>
-                        <Input onChange={(e) => changeFilter('direction', e.target.value)} className={styles.filterInput} />
-                    </div>
-                </div>
-            </DisplayContainer>
+            <FiltersView changeFilter={changeFilter} />
+            <CustomTable filters={filters} url={url} columns={columns} />
         </div>
     );
-};
+});
 
 export default Trades;
