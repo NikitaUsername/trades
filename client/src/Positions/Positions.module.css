@@ -1,0 +1,38 @@
+.filters {
+    display: flex;
+    flex-direction: column;
+    width: 20%
+}
+
+@media (max-width: 1200px) {
+    .filters {
+        width: 30%
+    }
+}
+
+@media (max-width: 780px) {
+    .filters {
+        width: 50%
+    }
+}
+
+@media (max-width: 480px) {
+    .filters {
+        width: 70%
+    }
+}
+
+.filter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 3px;
+}
+
+.filterName {
+    margin: 0 5px;
+}
+
+.filterInput {
+    width: 150px
+}

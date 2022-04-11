@@ -1,10 +1,10 @@
-from pickle import FALSE
-from turtle import pos
 from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 import pandas as pd
 
 app = Flask(__name__)
+CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data/trades.db'
 db = SQLAlchemy(app)
 
@@ -18,7 +18,7 @@ class Trades(db.Model):
 
 
 def serializer(trade):
-    return{
+    return {
         'id': trade.trade_id,
         'client': trade.client,
         'instrument': trade.instrument,
@@ -34,7 +34,7 @@ def getPositions():
         if(trades[idx].direction == 'S'):
             trades[idx].quantity = -trades[idx].quantity
     df = pd.DataFrame([*map(serializer, trades)])
-    positions = df.groupby(['client', 'instrument'], as_index=False)['quantity'].sum().to_json(orient='records')
+    positions = df.groupby(['client', 'instrument'], as_index=False)['quantity'].sum().reset_index().rename(columns={'index':'id'}).to_json(orient='records')
     return positions
 
 
